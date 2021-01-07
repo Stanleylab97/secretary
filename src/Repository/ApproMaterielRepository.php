@@ -2,38 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Agent;
+use App\Entity\ApproMateriel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Agent|null find($id, $lockMode = null, $lockVersion = null)
- * @method Agent|null findOneBy(array $criteria, array $orderBy = null)
- * @method Agent[]    findAll()
- * @method Agent[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method ApproMateriel|null find($id, $lockMode = null, $lockVersion = null)
+ * @method ApproMateriel|null findOneBy(array $criteria, array $orderBy = null)
+ * @method ApproMateriel[]    findAll()
+ * @method ApproMateriel[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class AgentRepository extends ServiceEntityRepository
+class ApproMaterielRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Agent::class);
+        parent::__construct($registry, ApproMateriel::class);
     }
 
-     /**
-     * @return Agent[]
-     */
-    public function findNotSecretary(): array
-    {
-        return $this->createQueryBuilder('a')
-        ->andWhere('a.fonction = :val')
-        ->setParameter('val', 'Secrétaire de direction')
-        ->getQuery()
-        ->getResult(); 
-    }
-
-    
     // /**
-    //  * @return Agent[] Returns an array of Agent objects
+    //  * @return ApproMateriel[] Returns an array of ApproMateriel objects
     //  */
     /*
     public function findByExampleField($value)
@@ -50,7 +37,7 @@ class AgentRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Agent
+    public function findOneBySomeField($value): ?ApproMateriel
     {
         return $this->createQueryBuilder('a')
             ->andWhere('a.exampleField = :val')

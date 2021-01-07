@@ -2,38 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Agent;
+use App\Entity\AffectationMateriel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Agent|null find($id, $lockMode = null, $lockVersion = null)
- * @method Agent|null findOneBy(array $criteria, array $orderBy = null)
- * @method Agent[]    findAll()
- * @method Agent[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method AffectationMateriel|null find($id, $lockMode = null, $lockVersion = null)
+ * @method AffectationMateriel|null findOneBy(array $criteria, array $orderBy = null)
+ * @method AffectationMateriel[]    findAll()
+ * @method AffectationMateriel[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class AgentRepository extends ServiceEntityRepository
+class AffectationMaterielRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Agent::class);
+        parent::__construct($registry, AffectationMateriel::class);
     }
 
-     /**
-     * @return Agent[]
-     */
-    public function findNotSecretary(): array
-    {
-        return $this->createQueryBuilder('a')
-        ->andWhere('a.fonction = :val')
-        ->setParameter('val', 'Secrétaire de direction')
-        ->getQuery()
-        ->getResult(); 
-    }
-
-    
     // /**
-    //  * @return Agent[] Returns an array of Agent objects
+    //  * @return AffectationMateriel[] Returns an array of AffectationMateriel objects
     //  */
     /*
     public function findByExampleField($value)
@@ -50,7 +37,7 @@ class AgentRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Agent
+    public function findOneBySomeField($value): ?AffectationMateriel
     {
         return $this->createQueryBuilder('a')
             ->andWhere('a.exampleField = :val')

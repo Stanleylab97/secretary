@@ -26,6 +26,18 @@ class Chauffeur
      * @ORM\Column(type="string", length=255)
      */
     private $contacts;
+    
+    const PERMIS=[
+        'A'=>"Catégorie A",
+        'B'=>"Catégorie B",
+        'C'=>"Catégorie C",
+        'D'=>"Catégorie D",
+        'E'=>"Catégorie E",             
+    ];
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $permis;
 
     public function getId(): ?int
     {
@@ -52,6 +64,18 @@ class Chauffeur
     public function setContacts(string $contacts): self
     {
         $this->contacts = $contacts;
+
+        return $this;
+    }
+
+    public function getPermis(): ?string
+    {
+        return $this->permis;
+    }
+
+    public function setPermis(string $permis): self
+    {
+        $this->permis = $permis;
 
         return $this;
     }

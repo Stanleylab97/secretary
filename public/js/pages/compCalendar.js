@@ -5,7 +5,7 @@
  */
 
 var CompCalendar = function() {
-    var calendarEvents  = $('.calendar-events');
+    var calendarEvents = $('.calendar-events');
 
     /* Function for initializing drag and drop event functionality */
     var initEvents = function() {
@@ -27,16 +27,16 @@ var CompCalendar = function() {
             initEvents();
 
             /* Add new event in the events list */
-            var eventInput      = $('#add-event');
-            var eventInputVal   = '';
+            var eventInput = $('#add-event');
+            var eventInputVal = '';
 
             // When the add button is clicked
-            $('#add-event-btn').on('click', function(){
+            $('#add-event-btn').on('click', function() {
                 // Get input value
                 eventInputVal = eventInput.prop('value');
 
                 // Check if the user entered something
-                if ( eventInputVal ) {
+                if (eventInputVal) {
                     // Add it to the events list
                     calendarEvents.prepend('<li class="animation-fadeInQuick2Inv"><i class="fa fa-calendar"></i> ' + $('<div />').text(eventInputVal).html() + '</li>');
 
@@ -87,8 +87,7 @@ var CompCalendar = function() {
                     // remove the element from the "Draggable Events" list
                     $(this).remove();
                 },
-                events: [
-                    {
+                events: [{
                         title: 'Cinema',
                         start: new Date(y, m, 2),
                         allDay: true,

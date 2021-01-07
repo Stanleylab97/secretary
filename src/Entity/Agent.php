@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AgentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -55,6 +57,27 @@ class Agent
      * @ORM\Column(type="string", length=255)
      */
     private $contact;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Mission::class, inversedBy="agent")
+     */
+    private $mission;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Mission::class, mappedBy="agent")
+     */
+    private $missions;
+
+    /**
+     * @ORM\OneToMany(targetEntity=AffectationMateriel::class, mappedBy="agent")
+     */
+    private $affectationMateriels;
+
+    public function __construct()
+    {
+        $this->missions = new ArrayCollection();
+        $this->affectationMateriels = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -141,6 +164,78 @@ class Agent
     public function setContact(string $contact): self
     {
         $this->contact = $contact;
+
+        return $this;
+    }
+
+    public function getMission(): ?Mission
+    {
+        return $this->mission;
+    }
+
+    public function setMission(?Mission $mission): self
+    {
+        $this->mission = $mission;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Mission[]
+     */
+    public function getMissions(): Collection
+    {
+        return $this->missions;
+    }
+
+    public function addMission(Mission $mission): self
+    {
+        if (!$this->missions->contains($mission)) {
+            $this->missions[] = $mission;
+            $mission->setAgent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMission(Mission $mission): self
+    {
+        if ($this->missions->removeElement($mission)) {
+            // set the owning side to null (unless already changed)
+            if ($mission->getAgent() === $this) {
+                $mission->setAgent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AffectationMateriel[]
+     */
+    public function getAffectationMateriels(): Collection
+    {
+        return $this->affectationMateriels;
+    }
+
+    public function addAffectationMateriel(AffectationMateriel $affectationMateriel): self
+    {
+        if (!$this->affectationMateriels->contains($affectationMateriel)) {
+            $this->affectationMateriels[] = $affectationMateriel;
+            $affectationMateriel->setAgent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAffectationMateriel(AffectationMateriel $affectationMateriel): self
+    {
+        if ($this->affectationMateriels->removeElement($affectationMateriel)) {
+            // set the owning side to null (unless already changed)
+            if ($affectationMateriel->getAgent() === $this) {
+                $affectationMateriel->setAgent(null);
+            }
+        }
 
         return $this;
     }

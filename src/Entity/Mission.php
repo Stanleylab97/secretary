@@ -25,6 +25,17 @@ class Mission
      */
     private $lieu;
 
+    const Moyen=[
+        '0'=>"Véhicule de service",
+        '1'=>"Taxi",
+        '2'=>"Avion",       
+    ];
+
+    const TYPEMISSION=[
+        '0'=>"Ponctuelle",
+        '1'=>"Tournée"  
+    ];
+
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -32,10 +43,7 @@ class Mission
 
    
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $chefMission;
+    
 
     /**
      * @ORM\Column(type="integer")
@@ -72,9 +80,37 @@ class Mission
      */
     private $trajetMissions;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $typeMission;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Agent::class, inversedBy="missions")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $agent;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $savedBy;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $traitement;
+
+
     public function __construct()
     {
         $this->trajetMissions = new ArrayCollection();
+        
     }
 
     public function getId(): ?int
@@ -118,17 +154,7 @@ class Mission
         return $this;
     }
 
-    public function getChefMission(): ?string
-    {
-        return $this->chefMission;
-    }
-
-    public function setChefMission(string $chefMission): self
-    {
-        $this->chefMission = $chefMission;
-
-        return $this;
-    }
+  
 
     public function getPrimeChef(): ?int
     {
@@ -228,6 +254,66 @@ class Mission
                 $trajetMission->setMission(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTypeMission(): ?string
+    {
+        return $this->typeMission;
+    }
+
+    public function setTypeMission(string $typeMission): self
+    {
+        $this->typeMission = $typeMission;
+
+        return $this;
+    }
+
+    public function getAgent(): ?Agent
+    {
+        return $this->agent;
+    }
+
+    public function setAgent(?Agent $agent): self
+    {
+        $this->agent = $agent;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getSavedBy(): ?string
+    {
+        return $this->savedBy;
+    }
+
+    public function setSavedBy(string $savedBy): self
+    {
+        $this->savedBy = $savedBy;
+
+        return $this;
+    }
+
+    public function getTraitement(): ?bool
+    {
+        return $this->traitement;
+    }
+
+    public function setTraitement(bool $traitement): self
+    {
+        $this->traitement = $traitement;
 
         return $this;
     }

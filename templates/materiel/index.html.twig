@@ -1,0 +1,130 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block title %}Materiel{% endblock %}
+
+
+{% block body %}
+
+ <!-- Forms Components Header -->
+<div class="content-header">
+    <div class="row">
+            <div class="col-sm-6">
+                                    <div class="header-section">
+                                        <h1>Attribution de matériel</h1>
+                                    </div>
+            </div>
+             <div class="col-sm-6 hidden-xs">
+                                    <div class="header-section">
+                                        <ul class="breadcrumb breadcrumb-top">
+                                            <li>Formulaire</li>
+                                            <li>Missions</li>
+                                            <li><a href="">Création</a></li>
+                                        </ul>
+                                    </div>
+           </div>
+    </div>
+</div>
+                        <!-- END Forms Components Header -->
+
+<div class="row">
+    <div class="col-xs-6">
+                                    <div class="block"> 
+                                        <!-- Flexible Grid Title -->
+                                        <div class="block-title">
+                                            <div class="block-options pull-right">
+                                                <a href="javascript:void(0)" class="btn btn-effect-ripple btn-default  enable-tooltip" data-toggle="button" title="Toggles .form-bordered class">Borderless</a>
+                                            </div>
+                                            <h2>Veuillez remplir le formulaire</h2>
+                                        </div>
+                                        <!-- END Flexible Grid Title -->
+
+                                        <!-- Flexible Grid Content -->
+                                            {{ form_start(form) }}
+                                              
+                                              <div class="row">
+                                               <div class="col-xs-6">{{form_row(form.agent) }} </div>
+                                              </div> 
+                                              <div class="row">
+                                               
+                                                <div class="col-xs-6">{{form_row( form.materiel) }} </div>
+
+                                                <div class="col-xs-6">{{form_row(form.qte,{attr:{'placeholder': 'Ex: 1'}}) }} </div>
+                                              </div> 
+                                                       
+                                              
+                                              <div class"row">
+                                                <div class="col-xs-12">{{ form_row(form.code, {attr:{'placeholder': 'Ex: M2021/254/54'}}) }}</div>
+                                              </div> 
+
+                                              <div class"row">
+                                                 <button type="submit" class="btn btn-success">Affecter le matériel</button>  
+                                              </div>
+                                              
+                                             
+                                            {{ form_end(form) }}
+                                        <!-- END Flexible Grid Content -->
+                                    </div>
+
+        
+                              
+    </div>
+    <div class="col-xs-6">
+        <!-- Datatables Block -->
+                        <!-- Datatables is initialized in js/pages/uiTables.js -->
+                        <div class="block full">
+                            <div class="block-title">
+                                <h2>Affections de matériel</h2>
+                            </div>
+                            <div class="table-responsive">
+                                <table id="example-datatable" class="table table-striped table-bordered table-vcenter">
+                                    <thead>
+                                        <tr>
+                                            <th>Date </th>
+                                            <th>Agent</th>
+                                            <th>Matériel</th>
+                                            <th>Code</th>
+                                            <th>Qte</th>
+                                            <th class="text-center" style="width: 50px;"><i class="fa fa-flash"></i></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for attribution in affectations %}
+                                        <tr>
+                                           
+                                            <td>{{ attribution.dateAffectation|date("d/m/Y")}}</td>
+                                            <td>{{ attribution.agent.nom}}</td>
+                                            <td>{{ attribution.materiel.libelle}}</td>
+                                            <td>{{ attribution.code}}</td>
+                                            <td>{{ attribution.qte}}</td>
+                                            <td class="text-center">
+                                                <a href="{{ path('edit_materiel',{id: attribution.id}) }}" data-toggle="tooltip" title="Consulter/Editer" class="btn btn-effect-ripple btn-xs btn-success"><i class="fa fa-pencil"></i></a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+         <!-- END Datatables Block -->
+    </div>
+
+  
+</div
+{% endblock %}
+
+{% block javascripts %}
+    <!-- Load and execute javascript code used only in this page -->
+        <script src="{{asset('js/pages/uiTables.js')}}"></script>
+        <script>$(function(){ UiTables.init(); });</script>
+
+        <script>
+            $(document).ready(function() {
+                // you may need to change this code if you are not using Bootstrap Datepicker
+                $('.js-datepicker').datepicker({
+                    format: 'dd-mm-yyyy'
+                });
+            });
+        </script>
+{% endblock %}
+

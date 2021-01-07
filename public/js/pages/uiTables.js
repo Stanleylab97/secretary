@@ -13,9 +13,12 @@ var UiTables = function() {
 
             /* Initialize Datatables */
             $('#example-datatable').dataTable({
-                columnDefs: [ { orderable: false, targets: [ 4 ] } ],
-                pageLength: 10,
-                lengthMenu: [[5, 10, 20], [5, 10, 20]]
+                columnDefs: [{ orderable: true, targets: [4] }],
+                pageLength: 5,
+                lengthMenu: [
+                    [5, 10, 20],
+                    [5, 10, 20]
+                ]
             });
 
             /* Add placeholder attribute to the search input */
@@ -23,8 +26,8 @@ var UiTables = function() {
 
             /* Select/Deselect all checkboxes in tables */
             $('thead input:checkbox').click(function() {
-                var checkedStatus   = $(this).prop('checked');
-                var table           = $(this).closest('table');
+                var checkedStatus = $(this).prop('checked');
+                var table = $(this).closest('table');
 
                 $('tbody input:checkbox', table).each(function() {
                     $(this).prop('checked', checkedStatus);
@@ -32,24 +35,24 @@ var UiTables = function() {
             });
 
             /* Table Styles Switcher */
-            var genTable        = $('#general-table');
-            var styleBorders    = $('#style-borders');
+            var genTable = $('#general-table');
+            var styleBorders = $('#style-borders');
 
-            $('#style-default').on('click', function(){
+            $('#style-default').on('click', function() {
                 styleBorders.find('.btn').removeClass('active');
                 $(this).addClass('active');
 
                 genTable.removeClass('table-bordered').removeClass('table-borderless');
             });
 
-            $('#style-bordered').on('click', function(){
+            $('#style-bordered').on('click', function() {
                 styleBorders.find('.btn').removeClass('active');
                 $(this).addClass('active');
 
                 genTable.removeClass('table-borderless').addClass('table-bordered');
             });
 
-            $('#style-borderless').on('click', function(){
+            $('#style-borderless').on('click', function() {
                 styleBorders.find('.btn').removeClass('active');
                 $(this).addClass('active');
 
