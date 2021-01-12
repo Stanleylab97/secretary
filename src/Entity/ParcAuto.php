@@ -49,6 +49,16 @@ class ParcAuto
      */
     private $consommation;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $places;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $statut;
+
     public function __construct()
     {
         $this->dateAffectation = new ArrayCollection();
@@ -145,6 +155,30 @@ class ParcAuto
     public function setConsommation(int $consommation): self
     {
         $this->consommation = $consommation;
+
+        return $this;
+    }
+
+    public function getPlaces(): ?int
+    {
+        return $this->places;
+    }
+
+    public function setPlaces(int $places): self
+    {
+        $this->places = $places;
+
+        return $this;
+    }
+
+    public function getStatut(): ?string
+    {
+        return $this->statut;
+    }
+
+    public function setStatut(string $statut): self
+    {
+        $this->statut = $statut;
 
         return $this;
     }

@@ -42,6 +42,18 @@
         <link rel="stylesheet" href="css/themes.css">
         <!-- END Stylesheets -->
 
+      <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
+
+
+
+        <style>
+            .error{
+                color: red;
+                text-align: center;
+                font-family: 'Inter', sans-serif;
+            }
+        </style>
         <!-- Modernizr (browser feature detection library) -->
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
     </head>
@@ -60,32 +72,42 @@
                 <div class="block-title">
                     <div class="block-options pull-right">
                         <a href="page_ready_reminder.html" class="btn btn-effect-ripple btn-primary" data-toggle="tooltip" data-placement="left" title="Forgot your password?"><i class="fa fa-exclamation-circle"></i></a>
-                        <a href="page_ready_register.html" class="btn btn-effect-ripple btn-primary" data-toggle="tooltip" data-placement="left" title="Create new account"><i class="fa fa-plus"></i></a>
+                        <a href="{{ path('app_register') }}" class="btn btn-effect-ripple btn-primary" data-toggle="tooltip" data-placement="left" title="Créer un compte"><i class="fa fa-plus"></i></a>
                     </div>
-                    <h2>Veuillez vous connecter</h2>
+                    {% for type, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="{{ type }}" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                     <h2>Veuillez vous connecter</h2>
                 </div>
                 <!-- END Login Title -->
 
                 <!-- Login Form -->
-                <form id="form-login" action="/dashboard" method="post" class="form-horizontal">
+                <form id="form-login" action="{{ path('app_login') }}" method="post" class="form-horizontal">
                     <div class="form-group">
                         <div class="col-xs-12">
-                            <input type="text" id="login-email" name="login-email" class="form-control" placeholder="Your email..">
-                        </div>
+                            <input type="text" id="login-email" name="email" class="form-control" value="{{ app.session.get(constant('Symfony\\Component\\Security\\Core\\Security::LAST_USERNAME')) }}" placeholder="Votre email..">
+                        </div>                                                                                                        
                     </div>
                     <div class="form-group">
                         <div class="col-xs-12">
-                            <input type="password" id="login-password" name="login-password" class="form-control" placeholder="Your password..">
+                            <input type="password" id="login-password" name="password" class="form-control" placeholder="Your password..">
                         </div>
                     </div>
                     <div class="form-group form-actions">
                         <div class="col-xs-8">
                             <label class="csscheckbox csscheckbox-primary">
-                                <input type="checkbox" id="login-remember-me" name="login-remember-me">
+                                <input type="checkbox" id="login-remember-me" name="_remember_me">
                                 <span></span>
                             </label>
-                            Se rappeler de moi?
+                            Se rappeler de moi
                         </div>
+
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token('login_form') }}"></input>
+
                         <div class="col-xs-4 text-right">
                             <button type="submit" class="btn btn-effect-ripple btn-sm btn-primary"><i class="fa fa-check"></i> Connexion</button>
                         </div>

@@ -2,22 +2,30 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\AffectationMateriel;
 use Faker;
+use App\Entity\User;
 use App\Entity\Agent;
-use App\Entity\ApproMateriel;
 use App\Entity\Mission;
 use App\Entity\Service;
+use App\Entity\Materiel;
 use App\Entity\ParcAuto;
 use App\Entity\Direction;
-use App\Entity\Materiel;
+use App\Entity\ApproMateriel;
+use App\Entity\AffectationMateriel;
 use App\Repository\AgentRepository;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
 class AppFixtures extends Fixture
 {
+    private $passwordEncoder;
+
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+     {
+         $this->passwordEncoder = $passwordEncoder;
+     }
     public function load(ObjectManager $manager)
     {
         // $product = new Product();
@@ -95,12 +103,15 @@ class AppFixtures extends Fixture
             $manager->persist($service6);
             $manager->flush();
 
+            $statuts=["Libre","Occupé","En maintenance","Défectueux"];
             for($i=0;$i<10;$i++){
             $vehicule=new ParcAuto();
             $vehicule->setCouleur($faker->colorName);
             $vehicule->setImmatriculation("BP".$faker->numberBetween($min = 0, $max = 9000)."RB");
             $i<5?$vehicule->setMarque("TOYOTA"):$vehicule->setMarque("FORD");
             $vehicule->setConsommation(8);
+            $vehicule->setStatut($faker->randomElement($statuts));
+            $vehicule->setPlaces(mt_rand(2,100));
             $i<5?$vehicule->setModel($faker->randomElement($array = array ('Camry 2008','Corolla Drogba','Avensis'))):$vehicule->setModel($faker->randomElement($array = array ('Focus','Ranger','Pick-Up')));
             $manager->persist($vehicule);
             $manager->flush();
@@ -152,9 +163,9 @@ class AppFixtures extends Fixture
             
         }
         $agent1=new Agent;
-        $agent1->setContact("95464156");
+        $agent1->setContact("60548785");
         $agent1->setMatricule(5487);
-        $agent1->setNom("NATA Ana");
+        $agent1->setNom("NATA Abiba");
         $agent1->setDirection($direction1);
         $agent1->setService($service5);
         $agent1->setFonction("Secrétaire de direction");
@@ -162,6 +173,55 @@ class AppFixtures extends Fixture
         $agent1->setContact($faker->e164PhoneNumber);
         $manager->persist($agent1);
         $manager->flush();
+
+        $user1 = new User;
+        $user1->setAgent($agent1);
+        $user1->setEmail("nata@test.com");
+        $user1->setRoles(['ROLE_SECRETARY']);
+        $user1->setPassword($this->passwordEncoder->encodePassword($user1, "password"));
+        $manager->persist($user1);
+        
+
+        $agent2 = new Agent;
+        $agent2->setContact("94555880");
+        $agent2->setMatricule(2026);
+        $agent2->setNom("AZANMASSOU Valdo");
+        $agent2->setDirection($direction1);
+        $agent2->setService($service2);
+        $agent2->setFonction("Analyste programmeur");
+        $agent2->setSexe("1");
+        $agent2->setContact($faker->e164PhoneNumber);
+        $manager->persist($agent2);
+        $manager->flush();
+        
+        $user2=new User;
+        $user2->setAgent($agent2);
+        $user2->setRoles(['ROLE_ADMIN']);
+        $user2->setEmail("valdo@test.com");
+        $user2->setPassword($this->passwordEncoder->encodePassword($user2, "password"));
+        $manager->persist($user2);
+
+        $agent3 = new Agent;
+        $agent3->setContact("65715698");
+        $agent3->setMatricule(5487);
+        $agent3->setNom("GENILAS Guy");
+        $agent3->setDirection($direction1);
+        $agent3->setService($service5);
+        $agent3->setFonction("Directeur Systèmes d'Information");
+        $agent3->setSexe("1");
+        $agent3->setContact($faker->e164PhoneNumber);
+        $manager->persist($agent3);
+        $manager->flush();
+
+        $user3=new User;
+        $user3->setAgent($agent3);
+        $user3->setEmail("guy@test.com");
+        $user3->setRoles(['ROLE_DIRECTOR']);
+        $user3->setPassword($this->passwordEncoder->encodePassword($user3, "password") );
+        $manager->persist($user3);
+        
+
+        
 
         for($i=0;$i<249;$i++){
             

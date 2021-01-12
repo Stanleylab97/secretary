@@ -58,10 +58,7 @@ class Agent
      */
     private $contact;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Mission::class, inversedBy="agent")
-     */
-    private $mission;
+   
 
     /**
      * @ORM\OneToMany(targetEntity=Mission::class, mappedBy="agent")
@@ -168,17 +165,7 @@ class Agent
         return $this;
     }
 
-    public function getMission(): ?Mission
-    {
-        return $this->mission;
-    }
 
-    public function setMission(?Mission $mission): self
-    {
-        $this->mission = $mission;
-
-        return $this;
-    }
 
     /**
      * @return Collection|Mission[]

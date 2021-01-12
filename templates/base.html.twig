@@ -264,13 +264,14 @@
                                             Paramètres
                                         </a>
                                     </li>
-                                    
+                                    {% if app.user %}
                                     <li>
-                                        <a href="page_ready_login.html">
+                                        <a href="{{ path('app_logout') }}">
                                             <i class="fa fa-power-off fa-fw pull-right"></i>
                                             Déconnexion
                                         </a>
                                     </li>
+                                    {% endif %}
                                 </ul>
                             </li>
                             <!-- END User Dropdown -->

@@ -78,7 +78,7 @@ class MaterielController extends AbstractController
             $em->persist($appro);
             $em->flush();
 
-            return $this->redirectToRoute('new_appro');  
+            return $this->redirectToRoute('approvisionnement    ');  
         }   
         
         return $this->render('materiel/approvisionnement.html.twig', [
