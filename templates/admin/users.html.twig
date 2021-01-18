@@ -1,0 +1,81 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+
+<!-- Datatables Block -->
+<!-- Datatables is initialized in js/pages/uiTables.js -->
+	<div class="block full"> <div class="block-title">
+<h2>Datatables</h2>
+<div class="block-options pull-right">
+	<a href="javascript:void(0)" class="btn btn-effect-ripple btn-default" onclick="App.pagePrint();">
+		<i class="fa fa-print"></i>
+		Print</a>
+</div>
+
+	</div>
+	<div class="table-responsive">
+		<table id="example-datatable" class="table table-striped table-bordered table-vcenter">
+			<thead>
+				<tr>
+					<th>Nom</th>
+					<th style="width: 40px;">Matricule</th>
+                    <th>E-mail</th>
+                    <th>Fonction</th>
+					<th>Roles</th>
+					<th class="text-center" style="width: 50px;">
+						<i class="fa fa-flash"></i>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for user in users %}
+					<tr>
+
+						<td>{{ user.agent.nom}}</td>
+						<td>{{ user.agent.matricule}}</td>
+                        <td>{{ user.email}}</td>
+						<td>{{ user.agent.fonction}}</td>
+                        <td>
+                            {% for role in user.roles %}
+								{% if role =='ROLE_USER' %}
+                                    Utilisateur
+								{% elseif role =='ROLE_SECRETARY'  %}
+									Secrétaire
+								{% elseif role =='ROLE_CHEFPARC'  %}
+									Chef Parc
+								{% elseif role =='ROLE_DIRECTOR'  %}
+									Directeur
+								{% elseif role =='ROLE_ADMIN'  %}
+									Administrateur
+								{% endif %}
+                              {% if not loop.last %}|{% endif %}
+                            {% endfor %}
+                                
+                        </td>
+
+						<td class="text-center">
+								<a href="{{ path('admin_editRoles',{id:user.id}) }}" title="Modifier" class="btn btn-effect-ripple btn-xs btn-warning">
+								<i class="fa fa-pencil"></i>
+							</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+<!-- END Datatables Block -->
+
+
+{% endblock %}
+
+{% block javascripts %}
+	<!-- Load and execute javascript code used only in this page -->
+	<script src="{{ asset('js/pages/uiTables.js')}}"></script>
+	<script>
+		$(function () {
+UiTables.init();
+});
+	</script>
+{% endblock %}

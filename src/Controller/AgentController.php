@@ -21,7 +21,7 @@ class AgentController extends AbstractController
     
 
      /**
-     * @Route("/createagent", name="createAgent", methods={"GET","POST"})
+     * @Route("/admin/createagent", name="createAgent", methods={"GET","POST"})
      */
     public function create(Request $request,EntityManagerInterface $em): Response
     {

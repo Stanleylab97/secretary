@@ -39,6 +39,11 @@ class Chauffeur
      */
     private $permis;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $disponibilite;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -76,6 +81,18 @@ class Chauffeur
     public function setPermis(string $permis): self
     {
         $this->permis = $permis;
+
+        return $this;
+    }
+
+    public function getDisponibilite(): ?string
+    {
+        return $this->disponibilite;
+    }
+
+    public function setDisponibilite(string $disponibilite): self
+    {
+        $this->disponibilite = $disponibilite;
 
         return $this;
     }

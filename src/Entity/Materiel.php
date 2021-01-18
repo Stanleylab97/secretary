@@ -34,10 +34,16 @@ class Materiel
      */
     private $affectationMateriels;
 
+    /**
+     * @ORM\OneToMany(targetEntity=StockMateriel::class, mappedBy="materiel")
+     */
+    private $stockMateriels;
+
     public function __construct()
     {
         $this->approMateriels = new ArrayCollection();
         $this->affectationMateriels = new ArrayCollection();
+        $this->stockMateriels = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -111,6 +117,36 @@ class Materiel
             // set the owning side to null (unless already changed)
             if ($affectationMateriel->getMateriel() === $this) {
                 $affectationMateriel->setMateriel(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|StockMateriel[]
+     */
+    public function getStockMateriels(): Collection
+    {
+        return $this->stockMateriels;
+    }
+
+    public function addStockMateriel(StockMateriel $stockMateriel): self
+    {
+        if (!$this->stockMateriels->contains($stockMateriel)) {
+            $this->stockMateriels[] = $stockMateriel;
+            $stockMateriel->setMateriel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStockMateriel(StockMateriel $stockMateriel): self
+    {
+        if ($this->stockMateriels->removeElement($stockMateriel)) {
+            // set the owning side to null (unless already changed)
+            if ($stockMateriel->getMateriel() === $this) {
+                $stockMateriel->setMateriel(null);
             }
         }
 

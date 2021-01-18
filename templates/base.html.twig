@@ -96,7 +96,7 @@
                 <div id="sidebar">
                     <!-- Sidebar Brand -->
                     <div id="sidebar-brand" class="themed-background">
-                        <a href="index.html" class="sidebar-title">
+                        <a href="{{ path('dashboard') }}" class="sidebar-title">
                             <i class="fa fa-cube"></i> <span class="sidebar-nav-mini-hide">e-<strong>Secretary</strong></span>
                         </a>
                     </div>
@@ -109,11 +109,11 @@
                             <!-- Sidebar Navigation -->
                             <ul class="sidebar-nav">
                                 <li>
-                                    <a href="/dashboard" class=" active"><i class="gi gi-compass sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Accueil</span></a>
+                                    <a href="{{ path('dashboard') }}" class=" active"><i class="gi gi-compass sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Accueil</span></a>
                                 </li>
-                                {# <li class="sidebar-separator">
+                                <li class="sidebar-separator">
                                     <i class="fa fa-ellipsis-h"></i>
-                                </li> #}
+                                </li> 
                                 <li>
                                     <a href="#" class="sidebar-nav-menu"><i class="fa fa-chevron-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i class="fa fa-rocket sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Gestion de missions</span></a>
                                     <ul>
@@ -139,27 +139,30 @@
                                           
                                     </ul>
                                 </li>
-                                <li>
-                                    <a href="#" class="sidebar-nav-menu"><i class="fa fa-chevron-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i class="gi gi-car sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Parc automobile</span></a>
-                                    <ul>
-                                        <li>
-                                            <a href="{{path('driver_dash')}}">Statut du parc</a>
-                                        </li>
-                                        <li>
-                                            <a href="{{path('show_sorties')}}">Régistre de sorties</a>
-                                        </li>
-                                        <li>
-                                            <a href="{{path('create_mission')}}">Enregistrer kilométrage</a>
-                                        </li>
-                                        <li>
-                                            <a href="{{path('create_mission')}}">Carburation</a>
-                                        </li>
-                                        
-                                        
-                                    </ul>
-                                </li>
-                                
-                                <li>
+                                {% if is_granted('ROLE_CHEFPARC') %}
+                                    <li>
+                                        <a href="#" class="sidebar-nav-menu"><i class="fa fa-chevron-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i class="gi gi-car sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Parc automobile</span></a>
+                                        <ul>
+                                            <li>
+                                                <a href="{{path('driver_dash')}}">Statut du parc</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{path('show_sorties')}}">Régistre de sorties</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{path('create_mission')}}">Enregistrer kilométrage</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{path('create_mission')}}">Carburation</a>
+                                            </li>
+                                            
+                                            
+                                        </ul>
+                                    </li>
+                                {% endif %}
+
+                                {% if is_granted('ROLE_ADMIN') %}
+                                 <li>
                                     <a href="#" class="sidebar-nav-menu"><i class="fa fa-chevron-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i class="gi gi-settings sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Paramètres</span></a>
                                     <ul>
                                         <li>
@@ -174,12 +177,12 @@
                                             </ul>
                                         </li>
                                         <li>
-                                            <a href="{{path('create_mission')}}">Utilisateurs</a>
+                                            <a href="{{path('admin_utilisateurs')}}">Utilisateurs</a>
                                         </li>
                                     </ul>
-                                </li>
-                               
-                                
+                                </li>   
+                                {% endif %}
+     
                             </ul>
                             <!-- END Sidebar Navigation -->
 

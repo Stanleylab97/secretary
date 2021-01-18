@@ -1,0 +1,39 @@
+{% extends "base.html.twig" %}
+{% form_theme userform 'bootstrap_4_layout.html.twig' %}
+
+
+
+ {% block body %}
+<!-- Forms Components Header -->
+<div class="content-header">
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="header-section">
+				<h1>Gestion des droits d'utilisateurs</h1>
+			</div>
+		</div>
+		<div class="col-sm-6 hidden-xs">
+			<div class="header-section">
+				<ul class="breadcrumb breadcrumb-top">
+					<li>Table</li>
+					<li>Utilisateurs</li>
+					<li>
+						<a href="">Roles</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END Forms Components Header -->
+
+{{form_start(userform)}}
+{{form_row(userform.email)}}
+{{form_row(userform.roles)}}
+
+{{form_end(userform)}}
+
+
+
+
+ {% endblock %}

@@ -12,6 +12,7 @@ use App\Entity\ParcAuto;
 use App\Entity\Direction;
 use App\Entity\ApproMateriel;
 use App\Entity\AffectationMateriel;
+use App\Entity\Chauffeur;
 use App\Repository\AgentRepository;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -164,7 +165,7 @@ class AppFixtures extends Fixture
         }
         $agent1=new Agent;
         $agent1->setContact("60548785");
-        $agent1->setMatricule(5487);
+        $agent1->setMatricule(1064);
         $agent1->setNom("NATA Abiba");
         $agent1->setDirection($direction1);
         $agent1->setService($service5);
@@ -283,5 +284,38 @@ class AppFixtures extends Fixture
         }   
         $manager->flush();
         
+        
+        for ($i=0; $i < 15 ; $i++) { 
+            if($i<6){
+                $chauffeur=new Chauffeur;
+                $chauffeur->setNom($faker->name());
+                $chauffeur->setPermis($faker->randomElement(['C','B','D']));
+                $chauffeur->setDisponibilite('Libre');
+                $chauffeur->setContacts($faker->phoneNumber);
+                $manager->persist($chauffeur);
+               
+                
+            }
+            if ($i < 9) {
+                $chauffeur = new Chauffeur;
+                $chauffeur->setNom($faker->name());
+                $chauffeur->setPermis($faker->randomElement(['C', 'B', 'D']));
+                $chauffeur->setDisponibilite('En mission');
+                $chauffeur->setContacts($faker->phoneNumber);
+                $manager->persist($chauffeur);
+               
+            }
+            if ($i >= 9) {
+                $chauffeur = new Chauffeur;
+                $chauffeur->setNom($faker->name());
+                $chauffeur->setPermis($faker->randomElement(['C', 'B', 'D']));
+                $chauffeur->setDisponibilite('Programmé');
+                $chauffeur->setContacts($faker->phoneNumber);
+                $manager->persist($chauffeur);
+                
+            }
+            
+        }
+        $manager->flush();
     }
 }
